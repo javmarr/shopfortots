@@ -1,0 +1,33 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+img {
+  height: 30%;
+  width: 30%;
+}
+
+table {
+
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 15px;
+    text-align: left;
+}
+tr:nth-child(even) {background-color: #f2f2f2}
+
+#total {
+  margin-top: 40px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+}

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  p Make christmas merorable for orphans in the Rio Grande Valley
+  img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
+  table(style="width:100%")
+    tr
+      th Toy
+      th Description
+      th Price
+      th Purchase
+    tr
+      td 
+        img(src="http://www.toysrus.com/graphics/product_images/pTRU1-23425741dt.jpg", alt="Toy Pic", style="width:128px;height:128px;")
+      td Lego set
+      td $50
+      td
+        form(action='demo_form.asp', method='get')
+          input(type='checkbox', name='addtocart', value='buy')
+  div#total
+    .container
+      p Total: #{totalcost} 
+//this part needs to be added in depending on the toys selected 
