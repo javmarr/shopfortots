@@ -1,0 +1,8 @@
+extends layout
+div#addpage
+  block content
+    h1= title
+    br
+    p Add a gift to the list by pasting the Amazon URL to the box below.
+    form(action ='', method = "post")
+      input(type='text', name='url', placeholder='New URL...')
