@@ -11,7 +11,7 @@ var addnew = require('./routes/addnew')
 var users = require('./routes/users');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/necklace');
+mongoose.connect('mongodb://localhost/shopfortots');
 
 var app = express();
 

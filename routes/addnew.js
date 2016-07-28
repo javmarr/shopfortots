@@ -79,14 +79,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log(`Finding: ${req.body.url}`);
+  console.log(`Got post: ${req.body.url}`);
 
   ParseURL(req.body.url, function(err, result){
     var act = req.body.act;
     if (err) return next(err);
-
+    console.log(JSON.stringify(result, null, '  '));
     // if (act === "all") return getInventory(req, res, next);
-    if (act === "add") return addItem(req, res, next);
+    return addItem(req, res, next);
     // if (act === "update") return updateItem(req, res, next);
     // if (act === "remove") return removeBeads(req,res, next);
   });
