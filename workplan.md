@@ -1,13 +1,8 @@
 # Name of the project
 
-*This would be the Github project name*
-
-shopfortots
+Shop for Tots
 
 # Description
-
-*Explain why you want to work on this, and how this is fun/challenging/interesting.
-Also explain, how it'll add to your education/learning.*
 
 This is a civic-minded project to create a wishlist management system for toy drives,
 to maintain a list of approved toys, and offer a method for supporters to donate toward
