@@ -21,7 +21,7 @@ block content
     each item in items
       tr
         td 
-          p #{item.image}
+          img(src= '#{item.image}', style="width:128px;height:128px;")
         td #{item.title}
         td(id="price_#{item.id}" value="#{item.price}") $#{item.price}
         td

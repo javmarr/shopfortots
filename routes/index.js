@@ -7,12 +7,12 @@ router.get('/', function(req, res, next) {
   id: "10",
   title: 'toy1' ,
   price: 1,
-  image: 'stuff'
+  image: 'http://www.toysrus.com/graphics/tru_prod_images/Barbie-Cash-Register-Play-Set--pTRU1-15652628dt.jpg'
   },{
   id: "20",
   title: 'toy2' ,
   price: 3,
-  image: 'stuffy'
+  image: 'http://www.toysrus.com/graphics/tru_prod_images/Baby-Alive-Super-Snacks-Snackin--pTRU1-23516132dt.jpg'
   }]
   })
 
