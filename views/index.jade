@@ -14,17 +14,34 @@ block content
       td 
         img(src="http://www.toysrus.com/graphics/product_images/pTRU1-23425741dt.jpg", alt="Toy Pic", style="width:128px;height:128px;")
       td Lego set
-      td $50
+      td(id = price, value = '50') $50
       td
         form(action='', method='get')
           input(type='checkbox', class='checkbox' id='ch1', name='addtocart', value='buy')
-          input(type='checkbox', class='checkbox' id='ch2', name='addtocart', value='buy')
+    each item in items
+      tr
+        td 
+          img(src= '#{item.image}', style="width:128px;height:128px;")
+        td #{item.title}
+        td(id="price_#{item.id}" value="#{item.price}") $#{item.price}
+        td
+          form(action='', method='get')
+            input(type='checkbox', class='checkbox' id='#{item.id}', name='addtocart', value='buy')
+            
   script.
+    var total=0
     $('.checkbox').click( function() {
       if($(this).prop("checked")) {
-        console.log($(this).attr('id'));
+         addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
+         total = total + addtotal
+         $('#totalLabel').text('Total: '+ total); 
+      }
+      else{
+        addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
+        total = total - addtotal
+        $('#totalLabel').text('Total: '+ total); 
       }
     });
   div#total
     .container
-      p Total: #{totalcost} 
+      p#totalLabel Total:  
