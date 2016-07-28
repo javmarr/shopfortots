@@ -4,10 +4,10 @@ var ParseURL = require('../public/javascript/parser.js');
 var Item = require('../models/Item.js');
 
 
-function addItem(req, res, next) {
+function addItem(result, req, res, next) {
   // has non numeric characters
-  req.session.error = 'Quantity has to be a number';
-  res.redirect('/inventory');
+  // req.session.error = 'Quantity has to be a number';
+  console.log(JSON.stringify(result, null, '  '));
   let item = new Item({
     url: result.url,
     title: result.title,
@@ -17,6 +17,7 @@ function addItem(req, res, next) {
 
   item.save(function(err){
     if (err){
+      console.log('---SAVE ERROR---');
       var isEmpty = err.message.indexOf("validation failed") !== -1;
       // var dupIndex = err.message.indexOf("dup key:");
       // var isDup = dupIndex !== -1;
@@ -27,7 +28,7 @@ function addItem(req, res, next) {
         req.session.error = 'Error: No Empty Fields Allowed';
       }
     }
-    res.redirect('/index');
+    res.redirect('/');
   });
 }
 
@@ -68,14 +69,7 @@ function removeBeads(req, res, next) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Item.find(function(err, docs){
-    // same as: {error : req.session.error}
-    res.locals.error = req.session.error;
-    res.locals.success= req.session.success;
-    req.session.error = null;
-    req.session.success = null;
-    res.render('addnew', {title: 'Shop for Tots', items: docs});
-  });
+  res.render('addnew', {title: 'Shop for Tots'});
 });
 
 router.post('/', function(req, res, next) {
@@ -84,9 +78,8 @@ router.post('/', function(req, res, next) {
   ParseURL(req.body.url, function(err, result){
     var act = req.body.act;
     if (err) return next(err);
-    console.log(JSON.stringify(result, null, '  '));
     // if (act === "all") return getInventory(req, res, next);
-    return addItem(req, res, next);
+    addItem(result, req, res, next);
     // if (act === "update") return updateItem(req, res, next);
     // if (act === "remove") return removeBeads(req,res, next);
   });
