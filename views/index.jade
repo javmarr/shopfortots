@@ -1,5 +1,5 @@
 extends layout
-
+script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
 block content
   h1= title
   p Make christmas memorable for orphans in the Rio Grande Valley
@@ -17,8 +17,14 @@ block content
       td $50
       td
         form(action='', method='get')
-          input(type='checkbox', name='addtocart', value='buy')
-  
+          input(type='checkbox', class='checkbox' id='ch1', name='addtocart', value='buy')
+          input(type='checkbox', class='checkbox' id='ch2', name='addtocart', value='buy')
+  script.
+    $('.checkbox').click( function() {
+      if($(this).prop("checked")) {
+        console.log($(this).attr('id'));
+      }
+    });
   div#total
     .container
       p Total: #{totalcost} 
