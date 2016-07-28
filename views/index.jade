@@ -30,14 +30,15 @@ block content
     $('.checkbox').click( function() {
       if($(this).prop("checked")) {
          addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
-         total = total + addtotal
-         $('#totalLabel').text('Total: '+ total); 
+         total = total + addtotal;
       }
       else{
         addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
-        total = total - addtotal
-        $('#totalLabel').text('Total: '+ total); 
+        total = total - addtotal;
       }
+      total = parseFloat(total.toFixed(2));
+      
+      $('#totalLabel').text('Total: '+ total); 
     });
   div#total
     .container
