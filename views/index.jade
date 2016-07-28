@@ -4,29 +4,26 @@ block content
   h1= title
   p Make christmas memorable for orphans in the Rio Grande Valley
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
+  br
+  a(href="/addnew") Add Item
+  br
+  br
   table(style="width:100%")
     tr
       th Toy
       th Description
       th Price
       th Purchase
-    tr
-      td 
-        img(src="http://www.toysrus.com/graphics/product_images/pTRU1-23425741dt.jpg", alt="Toy Pic", style="width:128px;height:128px;")
-      td Lego set
-      td(id = price, value = '50') $50
-      td
-        form(action='', method='get')
-          input(type='checkbox', class='checkbox' id='ch1', name='addtocart', value='buy')
+
     each item in items
       tr
         td 
           img(src= '#{item.image}', style="width:128px;height:128px;")
         td #{item.title}
-        td(id="price_#{item.id}" value="#{item.price}") $#{item.price}
+        td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
         td
           form(action='', method='get')
-            input(type='checkbox', class='checkbox' id='#{item.id}', name='addtocart', value='buy')
+            input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
             
   script.
     var total=0
