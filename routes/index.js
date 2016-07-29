@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
+var session = require('express-session');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,5 +22,15 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
+router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  failureRedirect: '/'
+}), function(req, res){
+  res.redirect('/');
+});
+router.get('/logout', function(req, res, next){
+  req.logout();
+  res.redirect('/');
+});
 module.exports = router;
