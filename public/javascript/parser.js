@@ -11,10 +11,11 @@ function clean(site, obj) {
   var cleanObj = obj;
   for(i in cleanObj) {
     cleanObj[i] = cleanObj[i].trim();
-
-    if(i.indexOf('price') != -1) {
-      // remove any non digit characters and '.' from price keys
-      cleanObj[i] = cleanObj[i].replace(/[^0-9.]/g, '');
+    if (i) {
+      if (i.indexOf('price') != -1) {
+        // remove any non digit characters and '.' from price keys
+        cleanObj[i] = cleanObj[i].replace(/[^0-9.]/g, '');
+      }
     }
   }
   return cleanObj;
@@ -23,7 +24,7 @@ function clean(site, obj) {
 // parses the data retrieved
 function processResults(site, obj) {
   var output;
-  if(site == 'amazon' || site == 'walmart') {
+  if (site == 'amazon' || site == 'walmart') {
     // try to set the 'price' to the retail price
     if (obj['listing_price'])
       obj['price'] = obj['listing_price'];
@@ -78,22 +79,23 @@ function walmartParse (url, done) {
 var ParseURL = function (url, done) {
   console.log(`checking url: ${url}`);
 
-  if(url.indexOf('amazon.com') != -1) {
+  if (url.indexOf('amazon.com') != -1) {
     console.log('from amazon');
     return amazonParse(url, done);
-  } else if(url.indexOf('walmart.com') != -1) {
+  } else if (url.indexOf('walmart.com') != -1) {
     console.log('from walmart');
     return walmartParse(url, done);
   }
+  return done(`URL unsupported: "${url}"`, null);
 };
 
 
 function parseNPop(url) {
   ParseURL(url[0], function(err, result){
-    if(err) console.log(err);
+    if (err) console.log(err);
     else {
       console.log(`=====\nFinal parsed result: ${JSON.stringify(result, null, '  ')}`);
-      if(url.length > 1) {
+      if (url.length > 1) {
         url.shift();
         var cb = function(){
           parseNPop(url);
