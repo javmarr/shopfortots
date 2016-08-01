@@ -1,13 +1,14 @@
 var express = require('express');
+var validator = require('validator');
 var router = express.Router();
 var ParseURL = require('../public/javascript/parser.js');
 var Item = require('../models/Item.js');
 
 
-function addItem(req, res, next) {
+function addItem(result, req, res, next) {
   // has non numeric characters
-  req.session.error = 'Quantity has to be a number';
-  res.redirect('/inventory');
+  // req.session.error = 'Quantity has to be a number';
+  console.log(JSON.stringify(result, null, '  '));
   let item = new Item({
     url: result.url,
     title: result.title,
@@ -17,79 +18,66 @@ function addItem(req, res, next) {
 
   item.save(function(err){
     if (err){
-      var isEmpty = err.message.indexOf("validation failed") !== -1;
-      // var dupIndex = err.message.indexOf("dup key:");
-      // var isDup = dupIndex !== -1;
-      // console.log(err);
-      // console.log('===');
-      if(isEmpty){
-        // console.log(err.message);
-        req.session.error = 'Error: No Empty Fields Allowed';
+      console.log('---SAVE ERROR---');
+      if (err.name == 'MongoError' && err.code == '11000'){
+        console.log('Duplicate key');
+        req.session.error = {
+          message: 'Item is already on the list'
+        };
+        res.redirect('/addnew');
       }
-    }
-    res.redirect('/index');
-  });
-}
-
-/*
-function updateItem(req, res, next) {
-  console.log(req.body);
-  var newQty = req.body.qtyText;
-  var id = req.body.id;
-  // console.log(`id: ${id} | ${newQty}`);
-  Bead.findOne({id: id}, function(err, doc) {
-    // console.log(`found one: ${doc}`);
-    if(doc) {
-      doc.qty = newQty;
-      doc.save(function(err){
-        if (err) next(err);
-        req.session.success = "Update Successful";
-        res.redirect('/inventory');
-      });
+      console.log(err.name);
+      console.log(err.code);
     } else {
-      req.session.error = "Unknown Error, Unable to Update Value";
-      res.redirect('/inventory');
+      req.session.success = 'Item added';
+      res.redirect('/');
     }
   });
 }
-
-function removeBeads(req, res, next) {
-  var removeList = req.body.removeList.split(',');
-  console.log(removeList);
-  for (i in removeList) {
-    id = removeList[i];
-    console.log(id);
-    // Bead.remove({id: id});
-    Bead.find({id: id}).remove().exec();
-  }
-  res.redirect('/inventory');
-}
-*/
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Item.find(function(err, docs){
-    // same as: {error : req.session.error}
-    res.locals.error = req.session.error;
-    res.locals.success= req.session.success;
-    req.session.error = null;
-    req.session.success = null;
-    res.render('addnew', {title: 'Shop for Tots', items: docs});
-  });
+  res.locals.error = req.session.error;
+  res.locals.success= req.session.success;
+  req.session.error = null;
+  req.session.success = null;
+  res.render('addnew', { title: 'Shop for Tots' });
 });
 
+// handle URL POST form
 router.post('/', function(req, res, next) {
-  console.log(`Got post: ${req.body.url}`);
+  // console.log(`Got post: ${req.body.url}`);
 
-  ParseURL(req.body.url, function(err, result){
-    var act = req.body.act;
-    if (err) return next(err);
-    console.log(JSON.stringify(result, null, '  '));
-    // if (act === "all") return getInventory(req, res, next);
-    return addItem(req, res, next);
-    // if (act === "update") return updateItem(req, res, next);
-    // if (act === "remove") return removeBeads(req,res, next);
-  });
+  // error found, redirect and show
+  if (!validator.isURL(req.body.url)) {
+    var msg = 'Input is not a valid URL.';
+    req.session.error = {
+      message: msg
+    };
+    return res.redirect('/addnew');
+  }
+  else {
+    // try to parseURL
+    ParseURL(req.body.url, function(err, result){
+        if (err) {
+          // error from parser
+          req.session.error = {
+            message: err
+          };
+          return res.redirect('/addnew');
+        }
+        var act = req.body.act;
+        // if (act === "all") return getInventory(req, res, next);
+        addItem(result, req, res, next);
+        // if (act === "update") return updateItem(req, res, next);
+        // if (act === "remove") return removeBeads(req,res, next);
+      });
+  }
 });
 
+/* error hanlding done:
+ * invalid URL
+ * unsuported URL (site which Parser is not able to scrape)
+ * empty URL
+ */
 module.exports = router;

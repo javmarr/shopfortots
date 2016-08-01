@@ -4,9 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+<<<<<<< HEAD
 var passport = require('passport');
 var session = require('express-session');
 require('dotenv').config();
+=======
+var session = require('express-session')
+var helmet = require('helmet')
+
+>>>>>>> 4297478a4873a8e8872798373f4815767a80ab70
 var routes = require('./routes/index');
 var addnew = require('./routes/addnew');
 var users = require('./routes/users');
@@ -28,11 +34,13 @@ app.use(session({
 }));
 
 app.use(logger('dev'));
+app.use(cookieParser());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< HEAD
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -41,6 +49,9 @@ app.get('*', function(req, res, next){
   next();
 });
 var User = require('./models/User.js');
+=======
+
+>>>>>>> 4297478a4873a8e8872798373f4815767a80ab70
 app.use('/', routes);
 app.use('/users', users);
 app.use('/addnew', addnew);
