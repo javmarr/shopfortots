@@ -6,6 +6,7 @@ block content
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
   br
   a(href="/addnew") Add Item
+  p(style="color: green")=success
   br
   br
   table(style="width:100%")
@@ -22,23 +23,22 @@ block content
         td #{item.title}
         td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
         td
-          form(action='', method='get')
-            input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
+          input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
             
   script.
-    var total=0
     $('.checkbox').click( function() {
-      if($(this).prop("checked")) {
-         addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
-         total = total + addtotal;
-      }
-      else{
-        addtotal = Number($('#price_'+$(this).attr('id')).attr('value'));
-        total = total - addtotal;
+      var list = $('.checkbox');
+      var total = 0;
+      for(var i = 0; i < list.length; i++) {
+        addtotal = Number($('#price_'+list[i].id).attr('value'));
+        if(list[i].checked)
+        {
+          total = total + addtotal;  
+        }
       }
       total = parseFloat(total.toFixed(2));
       
-      $('#totalLabel').text('Total: '+ total); 
+      $('#totalLabel').text('Total: $'+ total.toFixed(2)); 
     });
   div#total
     .container
