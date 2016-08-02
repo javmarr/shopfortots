@@ -1,3 +1,5 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+# Shop For Tots
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+Purpose: This web app will allow users to select gifts to buy for underprivileged youths in their local community from a list of requested gifts.
+
+[more information](workplan.md)
