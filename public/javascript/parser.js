@@ -111,7 +111,7 @@ function parseNPop(url) {
   });
 }
 
-let url = ['https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
+var url = ['https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
           //  'https://www.amazon.com/Fisher-Price-71050-Brilliant-Basics-Rock-a-Stack/dp/B00000IZQP/ref=pd_bxgy_21_img_2?ie=UTF8&psc=1&refRID=3N79FQ9WE55EY0B2CD5N',
           //  'https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
           //  'https://www.amazon.com/Intex-River-Lounge-Inflatable-Diameter/dp/B000PEOMC8/ref=zg_bs_toys-and-games_3',
