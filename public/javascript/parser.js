@@ -33,7 +33,7 @@ function processResults(site, obj) {
     else if (obj['sale_price'])
       obj['price'] = obj['sale_price'];
     else
-      err = `Couldn't find price for ${site} url.`;
+      err = 'Couldn\'t find price for ' + site + ' url.';
 
     output = JSON.parse(JSON.stringify(obj));
     output = clean(site, output);
@@ -77,7 +77,7 @@ function walmartParse (url, done) {
 }
 
 var ParseURL = function (url, done) {
-  console.log(`checking url: ${url}`);
+  console.log('checking url: ' + url);
 
   if (url.indexOf('amazon.com') != -1) {
     console.log('from amazon');
@@ -86,7 +86,7 @@ var ParseURL = function (url, done) {
     console.log('from walmart');
     return walmartParse(url, done);
   }
-  return done(`URL unsupported: "${url}"`, null);
+  return done('URL unsupported: "' + url + '"', null);
 };
 
 
@@ -94,7 +94,7 @@ function parseNPop(url) {
   ParseURL(url[0], function(err, result){
     if (err) console.log(err);
     else {
-      console.log(`=====\nFinal parsed result: ${JSON.stringify(result, null, '  ')}`);
+      console.log('=====\nFinal parsed result: ' + JSON.stringify(result, null, '  '));
       if (url.length > 1) {
         url.shift();
         var cb = function(){
@@ -111,7 +111,7 @@ function parseNPop(url) {
   });
 }
 
-let url = ['https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
+var url = ['https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
           //  'https://www.amazon.com/Fisher-Price-71050-Brilliant-Basics-Rock-a-Stack/dp/B00000IZQP/ref=pd_bxgy_21_img_2?ie=UTF8&psc=1&refRID=3N79FQ9WE55EY0B2CD5N',
           //  'https://www.amazon.com/Fisher-Price-Brilliant-Basics-Babys-Blocks/dp/B0089W1IGG/ref=sr_1_8?s=toys-and-games&ie=UTF8&qid=1469548498&sr=1-8&keywords=toys',
           //  'https://www.amazon.com/Intex-River-Lounge-Inflatable-Diameter/dp/B000PEOMC8/ref=zg_bs_toys-and-games_3',
