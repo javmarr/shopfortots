@@ -46,7 +46,6 @@ router.get('/', function(req, res, next) {
 
 // handle URL POST form
 router.post('/', function(req, res, next) {
-  // console.log(`Got post: ${req.body.url}`);
 
   // error found, redirect and show
   if (!validator.isURL(req.body.url)) {
