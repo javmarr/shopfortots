@@ -16,6 +16,7 @@ var helmet = require('helmet')
 var routes = require('./routes/index');
 var addnew = require('./routes/addnew');
 var users = require('./routes/users');
+var cart = require('./routes/cart');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/shopfortots');
 
@@ -52,6 +53,7 @@ var User = require('./models/User.js');
 app.use('/', routes);
 app.use('/users', users);
 app.use('/addnew', addnew);
+app.use('/cart', cart);
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 
