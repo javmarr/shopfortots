@@ -9,7 +9,7 @@ function addItem(result, req, res, next) {
   // has non numeric characters
   // req.session.error = 'Quantity has to be a number';
   console.log(JSON.stringify(result, null, '  '));
-  let item = new Item({
+  var item = new Item({
     url: result.url,
     title: result.title,
     image: result.image,
@@ -46,7 +46,6 @@ router.get('/', function(req, res, next) {
 
 // handle URL POST form
 router.post('/', function(req, res, next) {
-  // console.log(`Got post: ${req.body.url}`);
 
   // error found, redirect and show
   if (!validator.isURL(req.body.url)) {

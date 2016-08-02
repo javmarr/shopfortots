@@ -5,19 +5,29 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var helmet = require('helmet')
 var passport = require('passport');
 var session = require('express-session');
 require('dotenv').config();
 
-
-var helmet = require('helmet')
-
-
 var routes = require('./routes/index');
 var addnew = require('./routes/addnew');
 var users = require('./routes/users');
+
+// db connection
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/shopfortots');
+const MONGO_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST;
+const MONGO_PORT = process.env.OPENSHIFT_MONGODB_DB_PORT;
+const MONGO_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
+const DB_NAME = 'shopfortots';
+
+if(MONGO_HOST) {
+  mongoose.connect('mongodb://admin:' + MONGO_PASSWORD + '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + DB_NAME);
+}
+else {
+  mongoose.connect('mongodb://localhost/' + DB_NAME);
+}
+// db ===
 
 var app = express();
 // view engine setup
