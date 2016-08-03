@@ -13,9 +13,14 @@ require('dotenv').config();
 var routes = require('./routes/index');
 var addnew = require('./routes/addnew');
 var users = require('./routes/users');
+<<<<<<< HEAD
 var cart = require('./routes/cart');
 
 // db connectoin
+=======
+
+// db connection
+>>>>>>> openshift/master
 var mongoose = require('mongoose');
 const MONGO_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST;
 const MONGO_PORT = process.env.OPENSHIFT_MONGODB_DB_PORT;
@@ -63,7 +68,10 @@ var User = require('./models/User.js');
 app.use('/', routes);
 app.use('/users', users);
 app.use('/addnew', addnew);
+<<<<<<< HEAD
 app.use('/cart', cart);
+=======
+>>>>>>> openshift/master
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 
