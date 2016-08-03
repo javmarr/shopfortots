@@ -6,11 +6,11 @@ block content
   p
     if user
       a(href="/logout") Logout user: #{user.profile.displayName}
-      
       form(action='', method = 'post', id = 'cartForm')
         input(type='hidden', name='cartArray', id='cartArray', value='#{cartArray}')
         input(type='hidden', name='userId', id='userId', value='#{user.facebookId}')
         input(type='submit', value = 'cart')
+      button(type='button') Cart
     else
       a(href="/auth/facebook") Login with Facebook!
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
@@ -34,6 +34,7 @@ block content
         td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
         td
           input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
+
   form(action='', method = 'post', id = 'cartupdateForm')
     input(type='submit', value = 'Update cart')
   script.
@@ -53,11 +54,11 @@ block content
       
       $('#totalLabel').text('Total: $'+ total.toFixed(2)); 
     });
+    
     $('#cartForm').submit(function(){
       console.log("submitting");
       $('#cartArray').val(cartArray);
     });
-    
     
   div#total
     .container

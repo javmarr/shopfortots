@@ -31,6 +31,7 @@ router.get('/logout', function(req, res, next){
   req.logout();
   res.redirect('/');
 });
+
 router.post('/', function(req, res, next) {
   console.log(req.body.cartArray);
 
