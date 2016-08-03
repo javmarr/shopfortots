@@ -15,8 +15,7 @@ var addnew = require('./routes/addnew');
 var users = require('./routes/users');
 var cart = require('./routes/cart');
 
-// db connectoin
-
+// db connection
 var mongoose = require('mongoose');
 const MONGO_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST;
 const MONGO_PORT = process.env.OPENSHIFT_MONGODB_DB_PORT;
@@ -65,7 +64,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/addnew', addnew);
 app.use('/cart', cart);
-
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 
