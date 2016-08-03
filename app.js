@@ -45,7 +45,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('*', function(req, res, next){
-  res.locals.user = req.user; // ensure all views can see the authenticate user
+  if(req.user)
+  {
+    console.log(req.user);
+    req.session.userId = req.user.facebookId;
+    res.locals.user = req.user; // ensure all views can see the authenticate user
+  }
   next();
 });
 var User = require('./models/User.js');

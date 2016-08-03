@@ -9,14 +9,28 @@ var Cart = require('../models/Cart.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  var ID = req.session.userId;
+  console.log('id used for cart get: ' + ID);
+  Cart.find({'userid': ID } ,function(err, cart){
+    console.log('cart is: ');
+    var itemIdArray = cart[0]['itemid'];
+    Item.find({'_id': {$in: itemIdArray}}, function(err, itemInfo){
+      console.log(itemInfo);
+      res.render('cart', {title: 'Your Cart',  items: itemInfo});
+    })
+  })
+})
+
+router.get('/update', function(req, res, next) {
     var ID = req.session.userId;
     Cart.find({'userid': ID } ,function(err, cart){
-      var itemIdArray = cart['itemid'];
+      var itemIdArray = cart[0]['itemid'];
       console.log("==" + cart);
       console.log("--" + itemIdArray);
       Item.find({'_id': {$in: itemIdArray}}, function(err,itemInfo){
         console.log(itemInfo);
-        res.render('cart', {title: 'Your Cart', cartlist: itemInfo});
+        req.session.success = 'items saved to cart';
+        res.redirect('/');
       });
     });
 })

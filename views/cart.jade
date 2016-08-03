@@ -2,4 +2,18 @@ extends layout
 div#addpage
   block content
     h1= title
-    p= cartlist
+    table(style="width:100%")
+      tr
+        th Toy
+        th Description
+        th Price
+        th Purchase
+
+      each item in items
+        tr
+          td 
+            img(src= '#{item.image}', style="width:128px;height:128px;")
+          td #{item.title}
+          td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
+          td
+            input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
