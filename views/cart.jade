@@ -2,12 +2,13 @@ extends layout
 div#addpage
   block content
     h1= title
+    a(href='/') Home
     table(style="width:100%")
       tr
-        th Toy
+        th Toy 
         th Description
         th Price
-        th Purchase
+        th Remove
 
       each item in items
         tr
@@ -17,3 +18,4 @@ div#addpage
           td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
           td
             input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
+    button(type ='button') Pay Now
