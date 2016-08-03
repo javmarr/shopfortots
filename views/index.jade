@@ -6,11 +6,12 @@ block content
   p
     if user
       a(href="/logout") Logout user: #{user.profile.displayName}
-      form(action='', method = 'post', id = 'cartForm')
+      br
+      a(href="/cart") cart
+      form(action='update', method = 'post', id = 'cartForm')
         input(type='hidden', name='cartArray', id='cartArray', value='#{cartArray}')
         input(type='hidden', name='userId', id='userId', value='#{user.facebookId}')
-        input(type='submit', value = 'cart')
-      button(type='button') Cart
+        input(type='submit', value = 'Update cart')
     else
       a(href="/auth/facebook") Login with Facebook!
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
@@ -35,8 +36,6 @@ block content
         td
           input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
 
-  form(action='', method = 'post', id = 'cartupdateForm')
-    input(type='submit', value = 'Update cart')
   script.
     var cartArray = [];
     $('.checkbox').click( function() {
