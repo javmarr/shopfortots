@@ -44,21 +44,18 @@ router.post('/', function(req, res, next) {
       if (err.name == 'MongoError' && err.code == '11000'){
         console.log('Duplicate user cart');
         Cart.find({'userid': req.body.userId}, function(err, docs){
-          console.log(docs);
-          console.log(docs[0]['itemid']);
-          console.log(docs[0]['userid']);
+          console.log("Docs: " + docs);
+          console.log("UserID: " + docs[0]['userid']);
+          console.log("ItemID: " + docs[0]['itemid']);
 
-          console.log("body cart array " + req.body.cartArray);
-          var newCartItems = docs[0]['itemid'].concat(req.body.cartArray.split(','));
-          console.log("new cart " + newCartItems);
+          var formCartArray = req.body.cartArray.split(',');
+          var newCartItems = docs[0]['itemid'].concat(formCartArray);
           newCartItems = removeDup(newCartItems);
-          
-          console.log("new cart " + newCartItems);
         })
       }
     }
-  });
-  res.redirect('/cart');
+    res.redirect('/cart');
+  }); // end save
 });
 
 
