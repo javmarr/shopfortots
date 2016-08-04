@@ -9,7 +9,6 @@ var helmet = require('helmet')
 var passport = require('passport');
 var session = require('express-session');
 
-require('dotenv').config();
 
 
 var routes = require('./routes/index');
@@ -28,6 +27,7 @@ if(MONGO_HOST) {
   mongoose.connect('mongodb://admin:' + MONGO_PASSWORD + '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + DB_NAME);
 }
 else {
+  require('dotenv').config();
   mongoose.connect('mongodb://localhost/' + DB_NAME);
 }
 // db ===
