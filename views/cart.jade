@@ -58,4 +58,5 @@ div#addpage
     div#totalcartarea
       .container
         p#totalcart Total:
-    button(type ='button') Pay Now
+    form(action='/charge', method='POST')
+      script.stripe-button(src='https://checkout.stripe.com/checkout.js', data-key='pk_test_67zFuYjMtaYaP9iOxr1WUf88', data-amount='999', data-name='Demo Site', data-description='Widget', data-image='/img/documentation/checkout/marketplace.png', data-locale='auto', data-zip-code='true')
