@@ -45,6 +45,10 @@ router.get('/logout', function(req, res, next){
   req.logout();
   res.redirect('/');
 });
+// this block of code takes the arrayform contents and checks if it has something in it
+// if there is then it adds it to the cart
+// if there are duplicates it finds the user's db entry
+// then it updates the cart with a new list containing both the old and new entries
 
 router.post('/update', function(req, res, next) {
   console.log(req.body.cartArray);
@@ -62,8 +66,8 @@ router.post('/update', function(req, res, next) {
             console.log(docs);
             console.log(docs[0]['itemid']);
             console.log(docs[0]['userid']);
-
             console.log("body cart array " + req.body.cartArray);
+
             var newCartItems = docs[0]['itemid'].concat(req.body.cartArray.split(','));
             console.log("new cart " + newCartItems);
             newCartItems = removeDup(newCartItems);
