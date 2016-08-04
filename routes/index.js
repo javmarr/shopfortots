@@ -18,17 +18,32 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/updateSession.json', function(req, res, next) {
+  console.log('received message');
+  // var hour = 3600000;
+  temp = req.session.user;
+  req.session.user = temp;
+  
+  console.log(req.session.cookie.maxAge);
+  res.send('hello');
+});
+
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  failureRedirect: '/'
-}), function(req, res){
-  res.redirect('/');
+    failureRedirect: '/'
+  }), function(req, res){
+    res.redirect('/');
 });
+
 router.get('/logout', function(req, res, next){
+  console.log('id: ' + req.session.userId);
+  req.session.userId = undefined;
+  console.log('id after delete: ' + req.session.userId);
   req.logout();
   res.redirect('/');
 });
+
 router.post('/update', function(req, res, next) {
   console.log(req.body.cartArray);
   if(req.body.cartArray!==""){

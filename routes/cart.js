@@ -10,15 +10,23 @@ var Cart = require('../models/Cart.js');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var ID = req.session.userId;
-  console.log('id used for cart get: ' + ID);
-  Cart.find({'userid': ID } ,function(err, cart){
-    console.log('cart is: ');
-    var itemIdArray = cart[0]['itemid'];
-    Item.find({'_id': {$in: itemIdArray}}, function(err, itemInfo){
-      console.log(itemInfo);
-      res.render('cart', {title: 'Your Cart',  items: itemInfo});
-    })
-  })
+  if(ID) {
+    console.log('----');
+    console.log('(in-session) id used for cart get: ' + ID);
+    console.log('----');
+
+    Cart.find({'userid': ID } ,function(err, cart){
+      console.log('cart is: ');
+      var itemIdArray = cart[0]['itemid'];
+      Item.find({'_id': {$in: itemIdArray}}, function(err, itemInfo){
+        console.log(itemInfo);
+        res.render('cart', {title: 'Your Cart',  items: itemInfo});
+      });
+    });
+  } else {
+    req.session.error = 'User id not valid';
+    res.redirect('/');
+  }
 })
 
 router.get('/update', function(req, res, next) {

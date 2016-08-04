@@ -41,7 +41,7 @@ app.use(session({
   secret: 'toys for cat',
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 600000 } //10 minutes
 }));
 
 app.use(logger('dev'));

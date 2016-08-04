@@ -59,6 +59,15 @@ block content
       $('#cartArray').val(cartArray);
     });
     
+    
+    var updateSession = function() {
+      $.getJSON("updateSession.json", function() {
+        console.log( "session update - success" );
+      });
+    }
+    
+    setInterval(updateSession, 1000);
+    
   div#total
     .container
       p#totalLabel Total:  
