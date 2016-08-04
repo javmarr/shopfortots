@@ -58,14 +58,15 @@ router.post('/removeItem', function(req,res,next){
         }
 
     }
-        console.log('new cart array: '+ newitems);
+    console.log('new cart array: '+ newitems);
+    Cart.update({'userid': ID}, {
+      itemid: newitems}, { multi: true }, function(err, raw){
+        if (err) return handleError(err);
+        console.log('The raw response from Mongo was ', raw);
+      })
   })
-  Cart.update({'userid': ID}, {
-    itemid: newitems}, { multi: true }, function(err, raw){
-      if (err) return handleError(err);
-      console.log('The raw response from Mongo was ', raw);
-    })
-    res.redirect('/cart')
+
+  res.redirect('/cart')
 })
   ;
 

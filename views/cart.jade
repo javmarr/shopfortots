@@ -24,22 +24,38 @@ div#addpage
             input(type='checkbox', class='checkbox' id='#{item._id}', name='removefromcart', value='dontbuy')
       script.
         var removeArray = [];
-        $('.checkbox').click( function() {
-          var list = $('.checkbox');
+        var total = 0;
+        var list = $('.checkbox');
+        for (var i = 0; i < list.length; i++) {
+          addtotal = Number($('#price_'+list[i].id).attr('value'));
+          total = total + addtotal;
+          total = parseFloat(total.toFixed(2));
+        }
+        
+        $(document).ready( function() {
+          console.log($('#totalcart').text());
+          $('#totalcart').text('Total: $'+ total.toFixed(2)); 
+          console.log($('#totalcart').text());
+        })
+          
+        
+        $('.checkbox').click( function() { // on click make an array
+          list = $('.checkbox');
           removeArray = [];
-          var total = 0;
           for (var i = 0; i < list.length; i++) {
-            addtotal = Number($('#price_'+list[i].id).attr('value'));
             if (list[i].checked) {
               removeArray.push(list[i].id);
-              total = total + addtotal;  
             }
             console.log('remove'+ removeArray);
           }
-          
         });
         $('#removeForm').submit(function(){
           console.log("submitting");
           $('#removeArray').val(removeArray);
         });
+        
+
+    div#totalcartarea
+      .container
+        p#totalcart Total:
     button(type ='button') Pay Now
