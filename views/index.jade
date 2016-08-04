@@ -20,6 +20,8 @@ block content
   p(style="color: green")=success
   br
   br
+  form(action='/charge', method='POST')
+    script.stripe-button(src='https://checkout.stripe.com/checkout.js', data-key='pk_test_67zFuYjMtaYaP9iOxr1WUf88', data-amount='999', data-name='Demo Site', data-description='Widget', data-image='/img/documentation/checkout/marketplace.png', data-locale='auto', data-zip-code='true')
   table(style="width:100%")
     tr
       th Toy
