@@ -4,6 +4,8 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 
+var stripe = require("stripe")("sk_test_mREOe68nWf34dXNmIAO0DvyF");
+
 var Item = require('../models/Item.js');
 var Cart = require('../models/Cart.js');
 
@@ -23,7 +25,7 @@ router.get('/updateSession.json', function(req, res, next) {
   // var hour = 3600000;
   temp = req.session.user;
   req.session.user = temp;
-  
+
   console.log(req.session.cookie.maxAge);
   res.send('hello');
 });
@@ -77,6 +79,27 @@ router.post('/update', function(req, res, next) {
     });
     res.redirect('/cart/update');
   }
+});
+
+
+/* POST charge page. */
+router.post('/charge', function(req, res, next) {
+  // (Assuming you're using express - expressjs.com)
+  // Get the credit card details submitted by the form
+  var stripeToken = req.body.stripeToken;
+
+  var charge = stripe.charges.create({
+    amount: 1000, // amount in cents, again
+    currency: "usd",
+    source: stripeToken,
+    description: "Example charge"
+  }, function(err, charge) {
+    if (err && err.type === 'StripeCardError') {
+      // The card has been declined
+      res.send('failure');
+    }
+  });
+  res.send('user token');
 });
 
 
