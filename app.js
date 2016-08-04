@@ -8,11 +8,14 @@ var bodyParser = require('body-parser');
 var helmet = require('helmet')
 var passport = require('passport');
 var session = require('express-session');
+
 require('dotenv').config();
+
 
 var routes = require('./routes/index');
 var addnew = require('./routes/addnew');
 var users = require('./routes/users');
+var cart = require('./routes/cart');
 
 // db connection
 var mongoose = require('mongoose');
@@ -34,13 +37,14 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(session({
   secret: 'toys for cat',
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 600000 } //10 minutes
 }));
 
 app.use(logger('dev'));
@@ -54,7 +58,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('*', function(req, res, next){
-  res.locals.user = req.user; // ensure all views can see the authenticate user
+  if(req.user)
+  {
+    console.log(req.user);
+    req.session.userId = req.user.facebookId;
+    res.locals.user = req.user; // ensure all views can see the authenticate user
+  }
   next();
 });
 var User = require('./models/User.js');
@@ -62,6 +71,7 @@ var User = require('./models/User.js');
 app.use('/', routes);
 app.use('/users', users);
 app.use('/addnew', addnew);
+app.use('/cart', cart);
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 

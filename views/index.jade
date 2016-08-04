@@ -6,7 +6,12 @@ block content
   p
     if user
       a(href="/logout") Logout user: #{user.profile.displayName}
-      button(type='button') Cart
+      br
+      a(href="/cart") cart
+      form(action='update', method = 'post', id = 'cartForm')
+        input(type='hidden', name='cartArray', id='cartArray', value='#{cartArray}')
+        input(type='hidden', name='userId', id='userId', value='#{user.facebookId}')
+        input(type='submit', value = 'Update cart')
     else
       a(href="/auth/facebook") Login with Facebook!
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
@@ -15,6 +20,8 @@ block content
   p(style="color: green")=success
   br
   br
+  form(action='/charge', method='POST')
+    script.stripe-button(src='https://checkout.stripe.com/checkout.js', data-key='pk_test_67zFuYjMtaYaP9iOxr1WUf88', data-amount='999', data-name='Demo Site', data-description='Widget', data-image='/img/documentation/checkout/marketplace.png', data-locale='auto', data-zip-code='true')
   table(style="width:100%")
     tr
       th Toy
@@ -30,15 +37,17 @@ block content
         td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
         td
           input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
-            
+
   script.
+    var cartArray = [];
     $('.checkbox').click( function() {
       var list = $('.checkbox');
+      cartArray = [];
       var total = 0;
-      for(var i = 0; i < list.length; i++) {
+      for (var i = 0; i < list.length; i++) {
         addtotal = Number($('#price_'+list[i].id).attr('value'));
-        if(list[i].checked)
-        {
+        if (list[i].checked) {
+          cartArray.push(list[i].id);
           total = total + addtotal;  
         }
       }
@@ -46,6 +55,21 @@ block content
       
       $('#totalLabel').text('Total: $'+ total.toFixed(2)); 
     });
+    
+    $('#cartForm').submit(function(){
+      console.log("submitting");
+      $('#cartArray').val(cartArray);
+    });
+    
+    
+    var updateSession = function() {
+      $.getJSON("updateSession.json", function() {
+        console.log( "session update - success" );
+      });
+    }
+    
+    setInterval(updateSession, 1000);
+    
   div#total
     .container
       p#totalLabel Total:  
