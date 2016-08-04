@@ -8,7 +8,11 @@ div#addpage
         th Toy 
         th Description
         th Price
-        th Remove
+        th
+          form(action='cart/removeItem', method = 'post', id = 'removeForm')
+            input(type='hidden', name='removeArray', id='removeArray', value='#{removeArray}')
+            input(type='hidden', name='userId', id='userId', value='#{user.facebookId}')
+            input(type='submit', value ='Remove')
 
       each item in items
         tr
@@ -17,5 +21,25 @@ div#addpage
           td #{item.title}
           td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
           td
-            input(type='checkbox', class='checkbox' id='#{item._id}', name='addtocart', value='buy')
+            input(type='checkbox', class='checkbox' id='#{item._id}', name='removefromcart', value='dontbuy')
+      script.
+        var removeArray = [];
+        $('.checkbox').click( function() {
+          var list = $('.checkbox');
+          removeArray = [];
+          var total = 0;
+          for (var i = 0; i < list.length; i++) {
+            addtotal = Number($('#price_'+list[i].id).attr('value'));
+            if (list[i].checked) {
+              removeArray.push(list[i].id);
+              total = total + addtotal;  
+            }
+            console.log('remove'+ removeArray);
+          }
+          
+        });
+        $('#removeForm').submit(function(){
+          console.log("submitting");
+          $('#removeArray').val(removeArray);
+        });
     button(type ='button') Pay Now
