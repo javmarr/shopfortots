@@ -5,23 +5,25 @@ block content
   p Make christmas memorable for orphans in the Rio Grande Valley
   p
     if user
-      a(href="/logout") Logout user: #{user.profile.displayName}
+      p Signed in as #{user.profile.displayName} 
+        a(href="/logout") Logout
       br
-      a(href="/cart") cart
+      a(href='/cart')
+        button(type ='button') View Cart
+      
       form(action='update', method = 'post', id = 'cartForm')
         input(type='hidden', name='cartArray', id='cartArray', value='#{cartArray}')
         input(type='hidden', name='userId', id='userId', value='#{user.facebookId}')
-        input(type='submit', value = 'Update cart')
+        input(type='submit', value = 'Add to cart')
     else
       a(href="/auth/facebook") Login with Facebook!
   img(src= "http://4.bp.blogspot.com/-4YfLFhOEXSE/UqR3KT0vf7I/AAAAAAAAIlY/TiJhH6aFX7Y/s1600/Christmas-Gifts-Clip-Arts-High-Resulation-HD-Wallpaper-for-Card-and-Wallpapers+(3).png")
   br
-  a(href="/addnew") Add Item
+  a(href="/addnew") Search For A New Item
   p(style="color: green")=success
   br
   br
-  form(action='/charge', method='POST')
-    script.stripe-button(src='https://checkout.stripe.com/checkout.js', data-key='pk_test_67zFuYjMtaYaP9iOxr1WUf88', data-amount='999', data-name='Demo Site', data-description='Widget', data-image='/img/documentation/checkout/marketplace.png', data-locale='auto', data-zip-code='true')
+  
   table(style="width:100%")
     tr
       th Toy
@@ -68,7 +70,7 @@ block content
       });
     }
     
-    setInterval(updateSession, 1000);
+    //- setInterval(updateSession, 1000);
     
   div#total
     .container

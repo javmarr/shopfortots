@@ -2,11 +2,20 @@ body {
 
   background-image: url('../images/knitting250px.png');
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 4px;
+    text-decoration: none;
+    color: initial;
 }
 
 img {
@@ -27,6 +36,18 @@ th, td {
     text-align: left;
 }
 tr:nth-child(even) {background-color: #f2f2f2}
+
+#totalcartarea {
+  margin-top: 40px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+#logoutuser {
+  position: relative;
+  left: 200px;
+}
 
 #total {
   margin-top: 40px;
