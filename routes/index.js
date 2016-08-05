@@ -20,6 +20,27 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/checkout', function(req, res, next) {
+  var ID = req.session.userId;
+  if(ID) {
+    console.log('----');
+    console.log('(in-session) id used for cart get: ' + ID);
+    console.log('----');
+
+    Cart.find({'userid': ID } ,function(err, cart){
+      console.log('cart is: ');
+      var itemIdArray = cart[0]['itemid'];
+      Item.find({'_id': {$in: itemIdArray}}, function(err, itemInfo){
+        console.log(itemInfo);
+        res.render('checkout', {title: 'Checkout Items',  items: itemInfo});
+      });
+    });
+  } else {
+    req.session.error = 'User id not valid';
+    res.redirect('/');
+  }
+})
+
 router.get('/updateSession.json', function(req, res, next) {
   console.log('received message');
   // var hour = 3600000;

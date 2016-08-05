@@ -42,6 +42,7 @@ router.get('/update', function(req, res, next) {
       });
     });
 })
+
 //this block of code will use a post then it will take the array of items
 //to delete and the user id and use model.find to compare it with the contents
 //of the cart[0].itemid and delete ids that are in both lists.
@@ -51,32 +52,35 @@ router.get('/update', function(req, res, next) {
 //of only removing the array elements we selected.
 router.post('/removeItem', function(req,res,next){
   var ID = req.body.userId;
-  var newitems = [];
-  //console.log('remove array: ' + req.body.removeArray)
-  var removeArray = (req.body.removeArray).split(',');
-  Cart.find({'userid': ID}, function(err,cart){
-    console.log("current items: " + cart[0]['itemid']);
-    var currentArray = cart[0]['itemid'];
-    console.log("items to be deleted: " + removeArray);
-    var newitems = [];
-    //this block should check if an id is in the list then it should remove it from the list.
-    for (var i = 0; i < currentArray.length; i++){
+
+  if(ID) {
+    //console.log('remove array: ' + req.body.removeArray)
+    var removeArray = (req.body.removeArray).split(',');
+    Cart.find({'userid': ID}, function(err,cart){
+      console.log("current items: " + cart[0]['itemid']);
+      var currentArray = cart[0]['itemid'];
+      console.log("items to be deleted: " + removeArray);
+      var newitems = [];
+      //this block should check if an id is in the list then it should remove it from the list.
+      for (var i = 0; i < currentArray.length; i++){
         if(removeArray.indexOf(currentArray[i]) < 0){
           newitems.push(currentArray[i]);
         }
 
-    }
-    console.log('new cart array: '+ newitems);
-    Cart.update({'userid': ID}, {
-      itemid: newitems}, { multi: true }, function(err, raw){
-        if (err) return handleError(err);
-        console.log('The raw response from Mongo was ', raw);
-      })
-  })
+      }
+      console.log('new cart array: '+ newitems);
+      Cart.update({'userid': ID}, {
+        itemid: newitems}, { multi: true }, function(err, raw){
+          if (err) return handleError(err);
+          console.log('The raw response from Mongo was ', raw);
+        })
+    })
+  } else {
+    req.session.error = 'User id not valid';
+  }
 
-  res.redirect('/cart')
-})
-  ;
+  res.redirect('/cart');
+});
 
 
 module.exports = router;

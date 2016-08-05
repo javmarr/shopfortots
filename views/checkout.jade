@@ -1,0 +1,46 @@
+extends layout
+div#addpage
+  block content
+    h1= title
+    a(href='/') Home
+    table(style="width:100%")
+      tr
+        th Toy 
+        th Description
+        th Price
+
+      each item in items
+        tr(class="singleItem" id="#{item._id}")
+          td 
+            img(src= '#{item.image}', style="width:128px;height:128px;")
+          td #{item.title}
+          td(id="price_#{item._id}" value="#{item.price}") $#{item.price}
+          
+    div#totalcartarea
+      .container
+        p#totalcart Total:
+    
+    form(action='/charge', method='POST')
+      script.stripe-button(src='https://checkout.stripe.com/checkout.js', data-key='pk_test_67zFuYjMtaYaP9iOxr1WUf88', data-amount='999', data-name='Demo Site', data-description='Widget', data-image='/img/documentation/checkout/marketplace.png', data-locale='auto', data-zip-code='true')
+
+        
+    script.
+      $(document).ready( function() {
+        var total = 0;
+        var list = $('.singleItem');
+        for (var i = 0; i < list.length; i++) {
+          addtotal = Number($('#price_'+list[i].id).attr('value'));
+          total = total + addtotal;
+          total = parseFloat(total.toFixed(2));
+        }
+        
+        $('#totalcart').text('Total: $'+ total.toFixed(2)); 
+        console.log($('#totalcart').text());
+        
+        StripeCheckout.open({
+          name: "Shop for tots",
+          amount: total.toFixed(2)*100
+        });
+      })
+      
+      
